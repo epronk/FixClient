@@ -125,6 +125,7 @@ namespace FixClient
             AutoAllocId = session.AutoAllocId;
             AutoScrollMessages = session.AutoScrollMessages;
             OrderBook = new Fix.OrderBook();
+            IndicationBook = new Fix.IndicationBook();
             PasteDefineCustomFields = session.PasteDefineCustomFields;
             PasteFilterEmptyFields = session.PasteFilterEmptyFields;
             PasteResetExisting = session.PasteResetExisting;
@@ -239,6 +240,9 @@ namespace FixClient
         [Browsable(false)]
         public Fix.OrderBook OrderBook { get; } = new Fix.OrderBook();
 
+        [Browsable(false)]
+        public Fix.IndicationBook IndicationBook { get; } = new Fix.IndicationBook();
+
         #region Options for the paste message dialog
 
         [Browsable(false)]
@@ -262,6 +266,7 @@ namespace FixClient
         }
 
         Fix.OrderBook.Retain _retain;
+        Fix.IndicationBook.Retain _retain2; // fixme
 
         public void Reset(bool resetGeneratedIds, Fix.OrderBook.Retain retain)
         {
