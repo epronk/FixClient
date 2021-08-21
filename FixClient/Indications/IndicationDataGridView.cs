@@ -10,8 +10,7 @@ namespace FixClient
     {
         public IndicationDataGridView()
         {
-            // fixme
-            //InitializeComponent();
+            InitializeComponent();
 
             EnableHeadersVisualStyles = false;
             ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
