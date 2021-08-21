@@ -90,6 +90,7 @@ namespace FixClient
             {
                 var clone = (Fix.Message)ev.Message.Clone();
                 OrderBook.Process(clone);
+                IndicationBook.Process(clone);
             };
 
             Messages.Reset += sender =>
