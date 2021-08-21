@@ -1,14 +1,3 @@
-/////////////////////////////////////////////////
-//
-// FIX Client
-//
-// Copyright @ 2021 VIRTU Financial Inc.
-// All rights reserved.
-//
-// Filename: IndicationDataGridView.cs
-// Author:   Gary Hughes
-//
-/////////////////////////////////////////////////
 using System;
 using System.Data;
 using System.Drawing;

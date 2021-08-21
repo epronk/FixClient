@@ -1,14 +1,3 @@
-/////////////////////////////////////////////////
-//
-// FIX Client
-//
-// Copyright @ 2021 VIRTU Financial Inc.
-// All rights reserved.
-// 
-// Filename: Order.cs
-// Author:   Gary Hughes
-//
-/////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
 using static Fix.Dictionary;
