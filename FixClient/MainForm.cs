@@ -56,6 +56,7 @@ namespace FixClient
         readonly ToolStripMenuItem _viewMessages;
         readonly ToolStripMenuItem _viewHistory;
         readonly ToolStripMenuItem _viewOrders;
+        readonly ToolStripMenuItem _viewIndications;
         //readonly ToolStripMenuItem _viewGenerator;
         readonly ToolStripMenuItem _viewFilters;
         readonly ToolStripMenuItem _viewCustomise;
@@ -219,12 +220,12 @@ namespace FixClient
             };
             _viewToolStrip.Items.Add(_ordersButton);
 
-            _ordersButton = new ToolStripButton("Indications", Properties.Resources.Indications, UpdateContentPanel)
+            _indicationsButton = new ToolStripButton("Indications", Properties.Resources.Indications, UpdateContentPanel)
             {
                 ImageTransparentColor = Color.White,
                 Tag = _indicationsPanel
             };
-            _viewToolStrip.Items.Add(_ordersButton);
+            _viewToolStrip.Items.Add(_indicationsButton);
 
             _generatorPanel = new GeneratorPanel { Dock = DockStyle.Fill };
             /*
@@ -352,6 +353,12 @@ namespace FixClient
                 Tag = _ordersPanel
             };
             viewMenu.DropDownItems.Add(_viewOrders);
+
+            _viewIndications = new ToolStripMenuItem(_indicationsButton.Text, _indicationsButton.Image, UpdateContentPanel)
+            {
+                Tag = _indicationsPanel
+            };
+            viewMenu.DropDownItems.Add(_viewIndications);
 
             /*
             _viewGenerator = new ToolStripMenuItem(_generatorButton.Text, _generatorButton.Image, UpdateContentPanel)
