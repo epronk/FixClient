@@ -54,7 +54,12 @@ namespace Fix
                 IOIQty = ioiQtyField.Value;
             }
 
-	    Key = CreateKey(SenderCompID, TargetCompID, IOIID);
+            Messages = new List<Message>
+            {
+                message
+            };
+
+            Key = CreateKey(SenderCompID, TargetCompID, IOIID);
         }
 
         public List<Message> Messages { get; private set; }
@@ -62,7 +67,7 @@ namespace Fix
         public string SenderCompID { get; set; }
         public string TargetCompID { get; set; }
         public string IOIID { get; set; }
-	public string? NewClOrdID { get; set; } // This is for replaced orders, it is the reverse of OrigClOrdID
+	    public string? NewClOrdID { get; set; } // This is for replaced orders, it is the reverse of OrigClOrdID
         public string Symbol { get; set; }
         public string IOIQty { get; set; }
         public decimal? Price { get; set; }
