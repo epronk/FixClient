@@ -33,6 +33,7 @@ namespace FixClient
         readonly ToolStripButton _messagesButton;
         readonly ToolStripButton _historyButton;
         readonly ToolStripButton _ordersButton;
+        readonly ToolStripButton _indicationsButton;
         //readonly ToolStripButton _generatorButton;
         readonly ToolStripButton _filtersButton;
         readonly ToolStripButton _customiseButton;
@@ -70,6 +71,7 @@ namespace FixClient
 
         readonly MessagesPanel _messagesPanel;
         readonly OrdersPanel _ordersPanel;
+        readonly IndicationsPanel _indicationsPanel;
         readonly HistoryPanel _historyPanel;
         readonly GeneratorPanel _generatorPanel;
         readonly FiltersPanel _filtersPanel;
@@ -198,6 +200,8 @@ namespace FixClient
 
             _ordersPanel = new OrdersPanel(_messagesPanel, _messagesButton) { Dock = DockStyle.Fill };
 
+            _indicationsPanel = new IndicationsPanel(_messagesPanel, _messagesButton) { Dock = DockStyle.Fill };
+
             _historyPanel = new HistoryPanel { Dock = DockStyle.Fill };
             _historyPanel.MessageSelected += MessageDefaultsPanelMessageSelected;
 
@@ -212,6 +216,13 @@ namespace FixClient
             {
                 ImageTransparentColor = Color.White,
                 Tag = _ordersPanel
+            };
+            _viewToolStrip.Items.Add(_ordersButton);
+
+            _ordersButton = new ToolStripButton("Indications", Properties.Resources.Indications, UpdateContentPanel)
+            {
+                ImageTransparentColor = Color.White,
+                Tag = _indicationsPanel
             };
             _viewToolStrip.Items.Add(_ordersButton);
 
