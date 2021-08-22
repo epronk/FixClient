@@ -916,6 +916,10 @@ namespace FixClient
                 {
                     message.Fields.Add(field.Tag, Session.AutoClOrdId ? Session.FormatClOrdId(Session.NextClOrdId) : field.Value);
                 }
+                else if (field.Tag == FIX_5_0SP2.Fields.IOIID.Tag)
+                {
+                    message.Fields.Add(field.Tag, Session.NextIOIId);
+                }
                 else if (field.Tag == FIX_5_0SP2.Fields.OrderID.Tag)
                 {
                     message.Fields.Add(field.Tag, Session.NextOrderId);
@@ -1176,7 +1180,21 @@ namespace FixClient
                     }
                 }
             }
-        
+            else if (message.MsgType == FIX_5_0SP2.Messages.IOI.MsgType)
+            {
+                for (int index = 0; index < defaults.Fields.Count; ++index)
+                {
+                    Fix.Field field = defaults.Fields[index];
+
+                    if (field.Tag == FIX_5_0SP2.Fields.IOIID.Tag && Session.AutoIOIId)
+                    {
+                        int IOIID = Session.NextIOIId++;
+                        defaults.Fields[index].Value = IOIID.ToString();
+                        updatedFields.Add(new KeyValuePair<int, string>(index, IOIID.ToString()));
+                    }
+                }
+            }
+
             foreach (KeyValuePair<int, string> field in updatedFields)
             {
                 _fieldTable.Rows[field.Key][FieldDataTable.ColumnValue] = field.Value;

@@ -65,6 +65,7 @@ namespace FixClientTests
                 Host = "localhost",
                 Port = 20000,
                 NextClOrdId = 1,
+                NextIOIId = 1,
                 NextListId = 1,
                 NextAllocId = 1,
                 NextOrderId = 1,
@@ -103,6 +104,7 @@ namespace FixClientTests
             clone.Host = "otherhost";
             clone.Port = 40000;
             clone.NextClOrdId = 4;
+            clone.NextIOIId = 4;
             clone.NextListId = 4;
             clone.NextAllocId = 4;
             clone.NextOrderId = 4;
@@ -138,6 +140,7 @@ namespace FixClientTests
             Assert.AreEqual("localhost", original.Host);
             Assert.AreEqual(20000, original.Port);
             Assert.AreEqual(1, original.NextClOrdId);
+            Assert.AreEqual(1, original.NextIOIId);
             Assert.AreEqual(1, original.NextListId);
             Assert.AreEqual(1, original.NextAllocId);
             Assert.AreEqual(1, original.NextOrderId);
@@ -173,6 +176,7 @@ namespace FixClientTests
             Assert.AreEqual("otherhost", clone.Host);
             Assert.AreEqual(40000, clone.Port);
             Assert.AreEqual(4, clone.NextClOrdId);
+            Assert.AreEqual(4, clone.NextIOIId);
             Assert.AreEqual(4, clone.NextListId);
             Assert.AreEqual(4, clone.NextAllocId);
             Assert.AreEqual(4, clone.NextOrderId);
