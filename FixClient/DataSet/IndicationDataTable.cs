@@ -23,7 +23,7 @@ namespace FixClient
         public const string ColumnIOIRefID = "IOIRefID";
         public const string ColumnSide = "Side";
         public const string ColumnSideString = "SideString";
-        public const string ColumnIOIShares = "IOIShares";
+        public const string ColumnIOIQty = "IOIQty";
         public const string ColumnSymbol = "Symbol";
         public const string ColumnPrice = "Price";
         public const string ColumnSecurityType = "SecurityType";
@@ -37,7 +37,7 @@ namespace FixClient
             Columns.Add(ColumnSide, typeof(FieldValue));
             Columns.Add(ColumnSideString).ColumnMapping = MappingType.Hidden;
             Columns.Add(ColumnSymbol);
-            Columns.Add(ColumnIOIShares);
+            Columns.Add(ColumnIOIQty);
             Columns.Add(ColumnPrice);
             Columns.Add(ColumnSecurityType);
             primaryKey.Add(Columns.Add(ColumnIOIID));
