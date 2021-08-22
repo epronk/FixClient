@@ -814,6 +814,7 @@ namespace FixClient
                 _historyPanel.Session = CurrentSession;
                 _filtersPanel.Session = CurrentSession;
                 _ordersPanel.Session = CurrentSession;
+                _indicationsPanel.Session = CurrentSession;
                 _generatorPanel.Session = CurrentSession;
                 _customisePanel.Session = CurrentSession;
                 _logPanel.Session = CurrentSession;
@@ -974,6 +975,7 @@ namespace FixClient
             SaveSessionFile();
 
             _ordersPanel.Session = CurrentSession;
+            _indicationsPanel.Session = CurrentSession;
             //_generatorPanel.Session = Session;
             _filtersPanel.Session = CurrentSession;
             _customisePanel.Session = CurrentSession;
@@ -1008,6 +1010,7 @@ namespace FixClient
                 _filtersPanel.Session = CurrentSession;
                 _historyPanel.Session = CurrentSession;
                 _ordersPanel.Session = CurrentSession;
+                _indicationsPanel.Session = CurrentSession;
                 _generatorPanel.Session = CurrentSession;
                 _customisePanel.Session = CurrentSession;
 
