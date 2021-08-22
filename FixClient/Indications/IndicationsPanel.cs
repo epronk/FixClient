@@ -444,7 +444,11 @@ namespace FixClient
         {
             bool enabled = false;
 
-            _cancelButton.Enabled = enabled;
+            if (Session != null && Session.Connected && _indicationGrid.SelectedRows.Count > 0)
+            {
+                enabled = true;
+            }
+
             _amendButton.Enabled = enabled;
 
             _rejectButton.Enabled = enabled;
