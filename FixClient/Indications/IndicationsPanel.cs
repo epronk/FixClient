@@ -563,7 +563,7 @@ namespace FixClient
 
             var row = (IndicationDataRow)_indicationTable.NewRow();
             row.Indication = indication;
-            row[IndicationDataTable.ColumnIOIShares] = indication.IOIQty;
+            row[IndicationDataTable.ColumnIOIQty] = indication.IOIQty;
             row[IndicationDataTable.ColumnPrice] = indication.Price;
             row[IndicationDataTable.ColumnIOIID] = indication.IOIID;
             UpdateRow(row);
@@ -577,7 +577,7 @@ namespace FixClient
                 return;
             }
 
-            row[IndicationDataTable.ColumnIOIShares] = indication.IOIQty;
+            row[IndicationDataTable.ColumnIOIQty] = indication.IOIQty;
             row[IndicationDataTable.ColumnSymbol] = indication.Symbol;
 
             if (indication.Side != null)
