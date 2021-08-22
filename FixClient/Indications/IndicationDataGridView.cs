@@ -79,6 +79,31 @@ namespace FixClient
                 case IndicationDataTable.ColumnText:
                     column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     break;
+
+                case IndicationDataTable.ColumnIOIQty:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                case IndicationDataTable.ColumnPrice:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                case IndicationDataTable.ColumnSecurityType:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                case IndicationDataTable.ColumnIOIID:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                case IndicationDataTable.ColumnIOIRefID:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
             }
         }
 
