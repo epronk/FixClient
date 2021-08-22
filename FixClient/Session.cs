@@ -111,6 +111,7 @@ namespace FixClient
             Host = session.Host;
             Port = session.Port;
             NextClOrdId = session.NextClOrdId;
+            NextIOIId = session.NextIOIId;
             AppendDateToClOrdID = session.AppendDateToClOrdID;
             NextListId = session.NextListId;
             NextAllocId = session.NextAllocId;
@@ -121,6 +122,7 @@ namespace FixClient
             AutoNoOrders = session.AutoNoOrders;
             AutoListId = session.AutoListId;
             AutoClOrdId = session.AutoClOrdId;
+            AutoIOIId = session.AutoIOIId;
             AutoListSeqNo = session.AutoListSeqNo;
             AutoTransactTime = session.AutoTransactTime;
             AutoAllocId = session.AutoAllocId;
@@ -161,6 +163,12 @@ namespace FixClient
         [ReadOnly(false)]
         [JsonProperty]
         public int NextClOrdId { get; set; } = 1;
+
+        [Category(CategoryInitiator)]
+        [DisplayName("Next IOIID")]
+        [ReadOnly(false)]
+        [JsonProperty]
+        public int NextIOIId { get; set; } = 1;
 
         [Category(CategoryInitiator)]
         [DisplayName("Append Date to ClOrdID")]
@@ -224,6 +232,10 @@ namespace FixClient
 
         [Browsable(false)]
         [JsonProperty]
+        public bool AutoIOIId { get; set; } = true;
+
+        [Browsable(false)]
+        [JsonProperty]
         public bool AutoListSeqNo { get; set; } = true;
 
         [Browsable(false)]
@@ -277,6 +289,7 @@ namespace FixClient
             {
                 NextAllocId = 1;
                 NextClOrdId = 1;
+                NextIOIId = 1;
                 NextExecId = 1;
                 NextListId = 1;
                 NextOrderId = 1;
@@ -298,6 +311,7 @@ namespace FixClient
             SetReadOnly("BindHost", Behaviour == Fix.Behaviour.Acceptor);
             SetReadOnly("BindPort", Behaviour == Fix.Behaviour.Acceptor);
             SetReadOnly("NextClOrdId", OrderBehaviour == Fix.Behaviour.Acceptor);
+            SetReadOnly("NextIOIId", OrderBehaviour == Fix.Behaviour.Acceptor);
             SetReadOnly("NextListId", OrderBehaviour == Fix.Behaviour.Acceptor);
             SetReadOnly("NextAllocId", OrderBehaviour == Fix.Behaviour.Acceptor);
             SetReadOnly("NextOrderId", OrderBehaviour == Fix.Behaviour.Initiator);
