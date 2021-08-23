@@ -25,6 +25,8 @@ namespace Fix
                 throw new ArgumentException("Message does not contain a TargetCompID");
             }
 
+	    TargetCompID = targetField.Value;
+
             if (message.Fields.Find(FIX_5_0SP2.Fields.IOIID) is not Field IOIIDField || string.IsNullOrEmpty(IOIIDField.Value))
             {
                 throw new ArgumentException("Message does not contain a IOIID");
@@ -32,7 +34,13 @@ namespace Fix
 
             IOIID = IOIIDField.Value;
 
-            TargetCompID = targetField.Value;
+
+            if (message.Fields.Find(FIX_5_0SP2.Fields.IOITransType) is not Field IOITransTypeField)
+            {
+                throw new ArgumentException("Message does not contain a IOITransType");
+            }
+
+            IOITransType = (FieldValue?)IOITransTypeField;
 
             if (message.Fields.Find(FIX_5_0SP2.Fields.Symbol) is Field symbolField && !string.IsNullOrEmpty(symbolField.Value))
             {
@@ -67,6 +75,8 @@ namespace Fix
         public string SenderCompID { get; set; }
         public string TargetCompID { get; set; }
         public string IOIID { get; set; }
+        public FieldValue? IOITransType { get; set; }
+	
 	//    public string? NewClOrdID { get; set; } // This is for replaced orders, it is the reverse of OrigClOrdID
         public string Symbol { get; set; }
         public string IOIQty { get; set; }
