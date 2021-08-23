@@ -11,14 +11,87 @@ namespace FixTests
     public class IndicationBookTests
     {
         [TestMethod]
-        public void TestNew()
+        public void TestEmptyBook()
         {
-            var ioi = new Fix.Message("8=FIX.4.49=11235=649=ACCEPTOR56=INITIATOR34=3652=20210822-05:44:42.71923=asdadasasd55=BHP54=160=20210822-05:29:17.71210=035");
+            var book = new Fix.IndicationBook();
+            Assert.AreEqual(0, book.Indications.Count);
+	}
+	
+        [TestMethod]
+        public void TestCreateIndication()
+        {
+            var message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
+            message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
+            message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 5000);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.New.Value);
+
             var book = new Fix.IndicationBook();
 
-            Assert.AreEqual(0, book.Indications.Count);
-            Assert.IsTrue(book.Process(ioi));
+            Assert.IsTrue(book.Process(message));
             Assert.AreEqual(1, book.Indications.Count);
         }
-    }   
+
+	[TestMethod]
+        public void TestDuplicatedIndication()
+        {
+            var message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
+            message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
+            message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 5000);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.New.Value);
+
+            var book = new Fix.IndicationBook();
+
+            Assert.IsTrue(book.Process(message));
+            Assert.IsFalse(book.Process(message));
+            Assert.AreEqual(1, book.Indications.Count);
+        }
+
+	[TestMethod]
+        public void TestReplaceIndication()
+        {
+            var message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
+            message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
+            message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 1);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.New.Value);
+
+            var book = new Fix.IndicationBook();
+            Assert.IsTrue(book.Process(message));
+
+            message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
+            message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
+            message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 1);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.Replace.Value);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIRefID, 2);
+
+            Assert.IsTrue(book.Process(message));
+            Assert.AreEqual(1, book.Indications.Count);
+        }
+
+	[TestMethod]
+        public void TestCancelIndication()
+        {
+            var message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
+            message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
+            message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 1);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.New.Value);
+
+            var book = new Fix.IndicationBook();
+            Assert.IsTrue(book.Process(message));
+
+            message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
+            message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
+            message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 1);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.Cancel.Value);
+            message.Fields.Set(FIX_5_0SP2.Fields.IOIRefID, 2);
+
+            Assert.IsTrue(book.Process(message));
+            Assert.AreEqual(0, book.Indications.Count);
+        }
+    }
 }

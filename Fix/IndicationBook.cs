@@ -142,11 +142,27 @@ namespace Fix
                 return false;
             }
 
-            bool result;
+            bool result = false;
+            Field? IOITransType = message.Fields.Find(FIX_5_0SP2.Fields.IOITransType);
 
             try
             {
-                result = AddIndication(new Indication(message));
+                if (IOITransType is null)
+		        {
+		            result = false;
+		        }
+                else if (IOITransType.Value == FIX_5_0SP2.IOITransType.New.Value)
+                {
+                    result = AddIndication(new Indication(message));
+                }
+                else if (IOITransType.Value == FIX_5_0SP2.IOITransType.Cancel.Value)
+                {
+                    result = DeleteIndication(new Indication(message));
+                }
+                else if (IOITransType.Value == FIX_5_0SP2.IOITransType.Replace.Value)
+                {
+                    result = UpdateIndication(new Indication(message));
+                }
             }
             catch (Exception ex)
             {
@@ -206,61 +222,6 @@ namespace Fix
             return true;
         }
 
-        bool ProcessOrdStatusUpdate(Message message, string ClOrdID, FieldValue status)
-        {
-            //
-            // When we first store the indication we set the comp id's relative to the indication source so we
-            // need to flip them when searching for indications to match messages coming from the destination.
-            //
-            Indication? indication = FindIndication(message.TargetCompID,
-                                     message.SenderCompID,
-                                     ClOrdID);
-            if (indication == null)
-            {
-                message.Status = MessageStatus.Error;
-                message.StatusMessage = StatusMessageHeader + $" because a matching indication with ClOrdID = {ClOrdID} could not be found";
-                return false;
-            }
-
-            ProcessOrdStatusUpdate(message, indication, status);
-
-            return true;
-        }
-
-        void ProcessOrdStatusUpdate(Message message, Indication indication, FieldValue status)
-        {
-            if (indication.OrdStatus != FIX_5_0SP2.OrdStatus.PendingReplace || (indication.OrdStatus == FIX_5_0SP2.OrdStatus.PendingReplace && status != FIX_5_0SP2.OrdStatus.PendingCancel))
-            {
-                indication.OrdStatus = status;
-            }
-
-            if (indication.OrdStatus != FIX_5_0SP2.OrdStatus.PendingCancel &&
-               indication.OrdStatus != FIX_5_0SP2.OrdStatus.PendingReplace &&
-               indication.OrdStatus != FIX_5_0SP2.OrdStatus.Replaced)
-            {
-                UpdateIndication(indication, message);
-            }
-            else
-            {
-                Field? ExecType = message.Fields.Find(FIX_5_0SP2.Fields.ExecType);
-
-                if (ExecType is not null)
-                {
-                    //
-                    // Use hardcoded values for ExecType because values were removed in later releases and we don't want the
-                    // conversion to explode.
-                    //
-                    if (ExecType.Value == "1" /* Partial */|| ExecType.Value == "2" /* Fill */ )
-                    {
-                        UpdateIndication(indication, message);
-                    }
-                }
-            }
-
-            indication.Messages.Add(message);
-            OnIndicationUpdated(indication);
-        }
-
         public static string KeyForIndication(Indication indication)
         {
             return KeyForIndication(indication.SenderCompID, indication.TargetCompID, indication.IOIID);
@@ -281,9 +242,10 @@ namespace Fix
             return null;
         }
 
-        void DeleteIndication(Indication indication)
+        bool DeleteIndication(Indication indication)
         {
             Indications.Remove(KeyForIndication(indication.SenderCompID, indication.TargetCompID, indication.IOIID));
+            return true;
         }
 
         bool AddIndication(Indication indication)
@@ -305,17 +267,24 @@ namespace Fix
             return true;
         }
 
-        static void UpdateIndication(Indication indication, Message message, bool replacement = false)
+        bool UpdateIndication(Indication indication)
         {
-            if (message.Fields.Find(FIX_5_0SP2.Fields.Price) is Field PriceField && (decimal?)PriceField is decimal Price && Price > 0)
+            Indication? existing = FindIndication(indication.SenderCompID, indication.TargetCompID, indication.IOIID);
+
+            if (existing == null)
             {
-                indication.Price = Price;
+                indication.Messages[0].Status = MessageStatus.Error;
+                indication.Messages[0].StatusMessage = StatusMessageHeader + $" because an indication with IOIID = {indication.IOIID} does not exists";
+                return false;
             }
 
-            if (message.Fields.Find(FIX_5_0SP2.Fields.Text) is Field Text)
-            {
-                indication.Text = Text.Value;
-            }
+            indication.UpdateKey();
+            DeleteIndication(indication);
+            Indications.Add(indication);
+
+            OnIndicationInserted(indication);
+
+            return true;
         }
     }
 }
