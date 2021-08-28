@@ -23,10 +23,16 @@ namespace FixClient
         public const string ColumnIOIRefID = "IOIRefID";
         public const string ColumnSide = "Side";
         public const string ColumnSideString = "SideString";
+        public const string ColumnStatus = "Status";
+        public const string ColumnStatusString = "StatusString";
+        public const string ColumnStatusSideString = "SideString";
         public const string ColumnIOIQty = "IOIQty";
         public const string ColumnSymbol = "Symbol";
-        public const string ColumnPrice = "Price";
         public const string ColumnSecurityType = "SecurityType";
+        public const string ColumnSecurityTypeString = "SecurityTypeString";
+        public const string ColumnQualifiers = "Qualifiers";
+        public const string ColumnQualifiersString = "QualifiersString";
+        public const string ColumnPrice = "Price";
         public const string ColumnText = "Text";
 
         public IndicationDataTable(string name)
@@ -39,7 +45,10 @@ namespace FixClient
             Columns.Add(ColumnSymbol);
             Columns.Add(ColumnIOIQty);
             Columns.Add(ColumnPrice);
+            Columns.Add(ColumnStatus);
+            Columns.Add(ColumnStatusString).ColumnMapping = MappingType.Hidden;
             Columns.Add(ColumnSecurityType);
+            Columns.Add(ColumnQualifiers);
             primaryKey.Add(Columns.Add(ColumnIOIID));
             Columns.Add(ColumnIOIRefID);
             Columns.Add(ColumnText);

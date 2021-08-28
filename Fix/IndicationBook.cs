@@ -282,7 +282,7 @@ namespace Fix
             DeleteIndication(indication);
             Indications.Add(indication);
 
-            OnIndicationInserted(indication);
+            OnIndicationUpdated(indication);
 
             return true;
         }

@@ -563,9 +563,7 @@ namespace FixClient
 
             var row = (IndicationDataRow)_indicationTable.NewRow();
             row.Indication = indication;
-            row[IndicationDataTable.ColumnIOIQty] = indication.IOIQty;
-            row[IndicationDataTable.ColumnPrice] = indication.Price;
-            row[IndicationDataTable.ColumnIOIID] = indication.IOIID;
+
             UpdateRow(row);
             _indicationTable.Rows.Add(row);
         }
@@ -577,8 +575,6 @@ namespace FixClient
                 return;
             }
 
-            row[IndicationDataTable.ColumnIOIQty] = indication.IOIQty;
-            row[IndicationDataTable.ColumnSymbol] = indication.Symbol;
 
             if (indication.Side != null)
             {
@@ -586,8 +582,47 @@ namespace FixClient
                 row[IndicationDataTable.ColumnSideString] = indication.Side.Name;
             }
 
-            if (indication.Text != null)
+            row[IndicationDataTable.ColumnSymbol] = indication.Symbol;
+            row[IndicationDataTable.ColumnIOIQty] = indication.IOIQty;
+            row[IndicationDataTable.ColumnPrice] = indication.Price;
+
+            if (indication.IOITransType != null)
+            {
+                row[IndicationDataTable.ColumnStatus] = MapStatus(indication);
+                row[IndicationDataTable.ColumnStatusString] = indication.IOITransType.Name;
+            }
+
+            if (indication.Qualifiers != null)
+            {
+                row[IndicationDataTable.ColumnQualifiers] = string.Join(",", indication.Qualifiers);
+                //row[IndicationDataTable.ColumnQualifiersString] = indication.Qualifiers.Name;
+            }
+
+            if (indication.SecurityType != null)
+            {
+                row[IndicationDataTable.ColumnSecurityType] = indication.SecurityType;
+                row[IndicationDataTable.ColumnSecurityTypeString] = indication.SecurityType.Name;
+            }
+
+            row[IndicationDataTable.ColumnIOIID] = indication.IOIID;
+     	    row[IndicationDataTable.ColumnIOIRefID] = indication.IOIRefID;
+
+	    if (indication.Text != null)
                 row[IndicationDataTable.ColumnText] = indication.Text;
+	}
+
+        static String MapStatus(Fix.Indication indication)
+        {
+            if (indication.IOITransType is null)
+                return "";
+            if (indication.IOITransType.Value == FIX_5_0SP2.IOITransType.New.Value)
+                return "New";
+            else if (indication.IOITransType.Value == FIX_5_0SP2.IOITransType.Replace.Value)
+                return "Replaced";
+            else if (indication.IOITransType.Value == FIX_5_0SP2.IOITransType.Cancel.Value)
+                return "Cancelled";
+            else
+                return "";
         }
 
         void Reload()

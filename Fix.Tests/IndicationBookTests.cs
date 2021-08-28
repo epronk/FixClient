@@ -15,8 +15,8 @@ namespace FixTests
         {
             var book = new Fix.IndicationBook();
             Assert.AreEqual(0, book.Indications.Count);
-	}
-	
+        }
+
         [TestMethod]
         public void TestCreateIndication()
         {
@@ -56,9 +56,11 @@ namespace FixTests
             message.Fields.Set(FIX_5_0SP2.Fields.TargetCompID, "TARGET");
             message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 1);
             message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.New.Value);
-
+            message.Fields.Set(FIX_5_0SP2.Fields.Price, 45);
             var book = new Fix.IndicationBook();
             Assert.IsTrue(book.Process(message));
+                Fix.Indication? indication = book.Indications[0];
+            Assert.AreEqual(indication.Price, 45);
 
             message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
             message.Fields.Set(FIX_5_0SP2.Fields.SenderCompID, "SENDER");
@@ -66,8 +68,10 @@ namespace FixTests
             message.Fields.Set(FIX_5_0SP2.Fields.IOIID, 1);
             message.Fields.Set(FIX_5_0SP2.Fields.IOITransType, FIX_5_0SP2.IOITransType.Replace.Value);
             message.Fields.Set(FIX_5_0SP2.Fields.IOIRefID, 2);
+            message.Fields.Set(FIX_5_0SP2.Fields.Price, 50);
 
             Assert.IsTrue(book.Process(message));
+            message.Fields.Set(FIX_5_0SP2.Fields.Price, 50);
             Assert.AreEqual(1, book.Indications.Count);
         }
 

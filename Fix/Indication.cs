@@ -62,6 +62,21 @@ namespace Fix
                 IOIQty = ioiQtyField.Value;
             }
 
+            int index = 0;
+            for (; index < message.Fields.Count; ++index)
+            {
+                if (message.Fields[index].Tag == FIX_5_0SP2.Fields.NoIOIQualifiers.Tag)
+                    break;
+            }
+
+            var noGroups = (long?)message.Fields[index];
+            Qualifiers = new List<FieldValue>();
+            for (var i = 0; i < noGroups; ++i)
+            {
+                var qualifier = (FieldValue?)message.Fields[index + 1 + i];
+                if (qualifier != null)
+                    Qualifiers.Add(qualifier);
+            }
             Messages = new List<Message>
             {
                 message
@@ -71,14 +86,17 @@ namespace Fix
         }
 
         public List<Message> Messages { get; private set; }
+        public List<FieldValue> Qualifiers { get; private set; }
 
         public string SenderCompID { get; set; }
         public string TargetCompID { get; set; }
         public string IOIID { get; set; }
+        public string IOIRefID { get; set; }
         public FieldValue? IOITransType { get; set; }
 	
 	//    public string? NewClOrdID { get; set; } // This is for replaced orders, it is the reverse of OrigClOrdID
         public string Symbol { get; set; }
+        public FieldValue? SecurityType { get; set; }
         public string IOIQty { get; set; }
         public decimal? Price { get; set; }
         public FieldValue? Side { get; set; }

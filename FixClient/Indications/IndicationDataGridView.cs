@@ -90,7 +90,17 @@ namespace FixClient
                     column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     break;
 
+                case IndicationDataTable.ColumnStatus:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
                 case IndicationDataTable.ColumnSecurityType:
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                case IndicationDataTable.ColumnQualifiers:
                     column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                     column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     break;
