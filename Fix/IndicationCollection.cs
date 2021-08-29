@@ -16,27 +16,27 @@ namespace Fix
 
         public int Count => _keyIndex.Count;
 
-        public void Add(Indication order)
+        public void Add(Indication indication)
         {
-            _keyIndex.Add(order.Key, order);
+            _keyIndex.Add(indication.Key, indication);
 
             var key = new SendingTimeKey
             {
-                SendingTime = order.SendingTime,
+                SendingTime = indication.SendingTime,
                 Index = _nextIndex++
             };
 
-            _sendingTimeIndex.Add(key, order);
+            _sendingTimeIndex.Add(key, indication);
         }
 
         public Indication this[int index] => _sendingTimeIndex.Values[index];
 
-        public bool Contains(Indication order) => _keyIndex.ContainsKey(order.Key);
+        public bool Contains(Indication indication) => _keyIndex.ContainsKey(indication.Key);
 
         public Indication? Find(string key)
         {
-            _keyIndex.TryGetValue(key, out var order);
-            return order;
+            _keyIndex.TryGetValue(key, out var indication);
+            return indication;
         }
 
         public bool Remove(string key)
@@ -144,7 +144,7 @@ namespace Fix
 
         readonly Dictionary<string, Indication> _keyIndex = new();
 
-        // Use a compound with a unique int value so we can have orders with duplicate SendingTime.
+        // Use a compound with a unique int value so we can have indications with duplicate SendingTime.
         struct SendingTimeKey : IComparable<SendingTimeKey>
         {
             public DateTime SendingTime;
