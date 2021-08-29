@@ -523,15 +523,13 @@ namespace FixClient
             UpdateUiState();
         }
 
-        void IndicationBookIndicationUpdated(object? sender, Fix.IndicationsEventArgs ev)
+        void IndicationBookIndicationUpdated(object? sender, Fix.Indication indication)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new MethodInvoker(() => IndicationBookIndicationUpdated(sender, ev)));
+                BeginInvoke(new MethodInvoker(() => IndicationBookIndicationUpdated(sender, indication)));
                 return;
             }
-
-            Fix.Indication indication = ev.Indication;
 
             if (_indicationTable.Rows.Find(indication.IOIID) is not IndicationDataRow row)
             {
@@ -543,15 +541,15 @@ namespace FixClient
             _indicationGrid.RefreshEdit();
         }
 
-        void IndicationBookIndicationInserted(object? sender, Fix.IndicationsEventArgs ev)
+        void IndicationBookIndicationInserted(object? sender, Fix.Indication indication)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new MethodInvoker(() => IndicationBookIndicationInserted(sender, ev)));
+                BeginInvoke(new MethodInvoker(() => IndicationBookIndicationInserted(sender, indication)));
                 return;
             }
 
-            AddIndication(ev.Indication);
+            AddIndication(indication);
         }
 
         void AddIndication(Fix.Indication indication)
