@@ -4,39 +4,27 @@ using static Fix.Dictionary;
 
 namespace Fix
 {
-    public class IndicationsEventArgs : EventArgs
-    {
-        public IndicationsEventArgs(Indication indication)
-        {
-            Indication = indication;
-        }
-
-        public Indication Indication { get; }
-    }
-
     public class IndicationBook
     {
         #region Events
 
-        public delegate void IndicationDeligate(object sender, IndicationsEventArgs e);
-
-        public event IndicationDeligate? IndicationInserted;
-        public event IndicationDeligate? IndicationUpdated;
-        public event IndicationDeligate? IndicationDeleted;
+        public event EventHandler<Indication>? IndicationInserted;
+        public event EventHandler<Indication>? IndicationUpdated;
+        public event EventHandler<Indication>? IndicationDeleted;
 
         protected void OnIndicationInserted(Indication indication)
         {
-            IndicationInserted?.Invoke(this, new IndicationsEventArgs(indication));
+            IndicationInserted?.Invoke(this, indication);
         }
 
         protected void OnIndicationUpdated(Indication indication)
         {
-            IndicationUpdated?.Invoke(this, new IndicationsEventArgs(indication));
+            IndicationUpdated?.Invoke(this, indication);
         }
 
         protected void OnIndicationDeleted(Indication indication)
         {
-            IndicationDeleted?.Invoke(this, new IndicationsEventArgs(indication));
+            IndicationDeleted?.Invoke(this, indication);
         }
 
         #endregion
