@@ -62,21 +62,26 @@ namespace Fix
                 IOIQty = ioiQtyField.Value;
             }
 
-            int index = 0;
-            for (; index < message.Fields.Count; ++index)
+            int index = -1;
+            for (int i = 0; i < message.Fields.Count; ++i)
             {
-                if (message.Fields[index].Tag == FIX_5_0SP2.Fields.NoIOIQualifiers.Tag)
+                if (message.Fields[i].Tag == FIX_5_0SP2.Fields.NoIOIQualifiers.Tag)
+                    index = i;
                     break;
             }
 
-            var noGroups = (long?)message.Fields[index];
-            Qualifiers = new List<FieldValue>();
-            for (var i = 0; i < noGroups; ++i)
+            if (index >= 0)
             {
-                var qualifier = (FieldValue?)message.Fields[index + 1 + i];
-                if (qualifier != null)
-                    Qualifiers.Add(qualifier);
+                var noGroups = (long?)message.Fields[index];
+                Qualifiers = new List<FieldValue>();
+                for (var i = 0; i < noGroups; ++i)
+                {
+                    var qualifier = (FieldValue?)message.Fields[index + 1 + i];
+                    if (qualifier != null)
+                        Qualifiers.Add(qualifier);
+                }
             }
+
             Messages = new List<Message>
             {
                 message
