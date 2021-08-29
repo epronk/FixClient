@@ -41,7 +41,8 @@ namespace FixTests
             Initiator.TargetCompId = TargetCompId;
             Initiator.TestRequestDelay = 0;
             Initiator.NextExpectedMsgSeqNum = true;
-            Initiator.FileName = string.Format("{0}\\{1}-{2}.session", Path.GetTempPath(), Initiator.SenderCompId, Initiator.TargetCompId);
+            Initiator.FileName = string.Format("{0}\\{1}-{2}.session", Path.GetTempPath(), Initiator.SenderCompId,
+                Initiator.TargetCompId);
             if (File.Exists(Initiator.FileName))
             {
                 File.Delete(Initiator.FileName);
