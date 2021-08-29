@@ -279,7 +279,6 @@ namespace FixClient
         }
 
         Fix.OrderBook.Retain _retain;
-        Fix.IndicationBook.Retain _retain2; // fixme
 
         public void Reset(bool resetGeneratedIds, Fix.OrderBook.Retain retain)
         {
