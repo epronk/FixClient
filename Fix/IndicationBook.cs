@@ -78,9 +78,6 @@ namespace Fix
 
         public bool Process(Message message)
         {
-            if (message == null)
-                return false;
-
             bool result = true;
 
             try
