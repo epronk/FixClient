@@ -98,17 +98,12 @@ namespace Fix
         public string IOIID { get; set; }
         public string? IOIRefID { get; set; }
         public FieldValue? IOITransType { get; set; }
-	    public string Symbol { get; set; }
+        public string Symbol { get; set; }
         public FieldValue? SecurityType { get; set; }
         public string? IOIQty { get; set; }
         public decimal? Price { get; set; }
         public FieldValue? Side { get; set; }
-        public FieldValue? OrdStatus { get; set; }
         public string? Text { get; set; }
-	//        public Message? PendingMessage { get; set; }
-        //public long? PendingOrderQty { get; set; }
-        //public decimal? PendingPrice { get; set; }
-        public DateTime SendingTime { get; private set; }
 
         public string Key { get; private set; }
 
