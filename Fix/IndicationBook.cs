@@ -145,9 +145,9 @@ namespace Fix
             try
             {
                 if (IOITransType is null)
-		        {
-		            result = false;
-		        }
+                {
+                    result = false;
+                }
                 else if (IOITransType.Value == FIX_5_0SP2.IOITransType.New.Value)
                 {
                     result = AddIndication(new Indication(message));
