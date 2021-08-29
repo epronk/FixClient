@@ -66,8 +66,10 @@ namespace Fix
             for (int i = 0; i < message.Fields.Count; ++i)
             {
                 if (message.Fields[i].Tag == FIX_5_0SP2.Fields.NoIOIQualifiers.Tag)
+                {
                     index = i;
                     break;
+                }
             }
 
             if (index >= 0)
