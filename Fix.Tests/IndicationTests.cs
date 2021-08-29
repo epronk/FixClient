@@ -8,7 +8,6 @@ namespace FixTests
     public class IndicationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestQualifiers()
         {
             var message = new Fix.Message { MsgType = FIX_5_0SP2.Messages.IOI.MsgType };
@@ -22,8 +21,8 @@ namespace FixTests
 
             var indication = new Fix.Indication(message);
             Assert.IsNotNull(indication);
-            Assert.AreEqual("Limit", indication.Qualifiers[0].Name);
-            Assert.AreEqual("AtTheClose", indication.Qualifiers[1].Name);
+            Assert.AreEqual("Limit", indication.Qualifiers[0].ToString());
+            Assert.AreEqual("AtTheClose", indication.Qualifiers[1].ToString());
         }
     }
 }
