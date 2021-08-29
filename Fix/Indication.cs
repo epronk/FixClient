@@ -104,7 +104,7 @@ namespace Fix
         public decimal? Price { get; set; }
         public FieldValue? Side { get; set; }
         public string? Text { get; set; }
-
+        public DateTime SendingTime { get; private set; }
         public string Key { get; private set; }
 
         public void UpdateKey()
