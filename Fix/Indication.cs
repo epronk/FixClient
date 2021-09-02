@@ -34,6 +34,10 @@ namespace Fix
 
             IOIID = IOIIDField.Value;
 
+            if (message.Fields.Find(FIX_5_0SP2.Fields.IOIRefID) is Field IOIRefIDField)
+            {
+                IOIRefID = IOIRefIDField?.Value;
+            }
 
             if (message.Fields.Find(FIX_5_0SP2.Fields.IOITransType) is not Field IOITransTypeField)
             {
