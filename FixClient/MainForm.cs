@@ -33,6 +33,7 @@ namespace FixClient
         readonly ToolStripButton _messagesButton;
         readonly ToolStripButton _historyButton;
         readonly ToolStripButton _ordersButton;
+        readonly ToolStripButton _indicationsButton;
         //readonly ToolStripButton _generatorButton;
         readonly ToolStripButton _filtersButton;
         readonly ToolStripButton _customiseButton;
@@ -55,6 +56,7 @@ namespace FixClient
         readonly ToolStripMenuItem _viewMessages;
         readonly ToolStripMenuItem _viewHistory;
         readonly ToolStripMenuItem _viewOrders;
+        readonly ToolStripMenuItem _viewIndications;
         //readonly ToolStripMenuItem _viewGenerator;
         readonly ToolStripMenuItem _viewFilters;
         readonly ToolStripMenuItem _viewCustomise;
@@ -70,6 +72,7 @@ namespace FixClient
 
         readonly MessagesPanel _messagesPanel;
         readonly OrdersPanel _ordersPanel;
+        readonly IndicationsPanel _indicationsPanel;
         readonly HistoryPanel _historyPanel;
         readonly GeneratorPanel _generatorPanel;
         readonly FiltersPanel _filtersPanel;
@@ -198,6 +201,8 @@ namespace FixClient
 
             _ordersPanel = new OrdersPanel(_messagesPanel, _messagesButton) { Dock = DockStyle.Fill };
 
+            _indicationsPanel = new IndicationsPanel(_messagesPanel, _messagesButton) { Dock = DockStyle.Fill };
+
             _historyPanel = new HistoryPanel { Dock = DockStyle.Fill };
             _historyPanel.MessageSelected += MessageDefaultsPanelMessageSelected;
 
@@ -214,6 +219,13 @@ namespace FixClient
                 Tag = _ordersPanel
             };
             _viewToolStrip.Items.Add(_ordersButton);
+
+            _indicationsButton = new ToolStripButton("Indications", Properties.Resources.Indications, UpdateContentPanel)
+            {
+                ImageTransparentColor = Color.White,
+                Tag = _indicationsPanel
+            };
+            _viewToolStrip.Items.Add(_indicationsButton);
 
             _generatorPanel = new GeneratorPanel { Dock = DockStyle.Fill };
             /*
@@ -341,6 +353,12 @@ namespace FixClient
                 Tag = _ordersPanel
             };
             viewMenu.DropDownItems.Add(_viewOrders);
+
+            _viewIndications = new ToolStripMenuItem(_indicationsButton.Text, _indicationsButton.Image, UpdateContentPanel)
+            {
+                Tag = _indicationsPanel
+            };
+            viewMenu.DropDownItems.Add(_viewIndications);
 
             /*
             _viewGenerator = new ToolStripMenuItem(_generatorButton.Text, _generatorButton.Image, UpdateContentPanel)
@@ -715,6 +733,7 @@ namespace FixClient
                 _historyPanel.Session = CurrentSession;
                 _filtersPanel.Session = CurrentSession;
                 _ordersPanel.Session = CurrentSession;
+                _indicationsPanel.Session = CurrentSession;
                 _generatorPanel.Session = CurrentSession;
                 _customisePanel.Session = CurrentSession;
             }
@@ -796,6 +815,7 @@ namespace FixClient
                 _historyPanel.Session = CurrentSession;
                 _filtersPanel.Session = CurrentSession;
                 _ordersPanel.Session = CurrentSession;
+                _indicationsPanel.Session = CurrentSession;
                 _generatorPanel.Session = CurrentSession;
                 _customisePanel.Session = CurrentSession;
                 _logPanel.Session = CurrentSession;
@@ -956,6 +976,7 @@ namespace FixClient
             SaveSessionFile();
 
             _ordersPanel.Session = CurrentSession;
+            _indicationsPanel.Session = CurrentSession;
             //_generatorPanel.Session = Session;
             _filtersPanel.Session = CurrentSession;
             _customisePanel.Session = CurrentSession;
@@ -990,6 +1011,7 @@ namespace FixClient
                 _filtersPanel.Session = CurrentSession;
                 _historyPanel.Session = CurrentSession;
                 _ordersPanel.Session = CurrentSession;
+                _indicationsPanel.Session = CurrentSession;
                 _generatorPanel.Session = CurrentSession;
                 _customisePanel.Session = CurrentSession;
 

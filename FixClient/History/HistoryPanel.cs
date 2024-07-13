@@ -498,6 +498,10 @@ namespace FixClient
                 {
                     message.Fields.Add(new Fix.Field(field.Tag, Session.FormatClOrdId(Session.NextClOrdId++)));
                 }
+                else if (field.Tag == FIX_5_0SP2.Fields.IOIID.Tag)
+                {
+                    message.Fields.Add(new Fix.Field(field.Tag, Session.NextIOIId++));
+                }
                 else if (field.Tag == FIX_5_0SP2.Fields.OrderID.Tag)
                 {
                     message.Fields.Add(new Fix.Field(field.Tag, Session.NextOrderId++));
